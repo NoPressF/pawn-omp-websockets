@@ -4,7 +4,7 @@
 * [Conan 1.53+](https://conan.io/)
 * [Visual Studio 2019+](https://www.visualstudio.com/) (on Windows)
 * [Boost 1.86.0](https://www.boost.org/releases/1.86.0/)
-* [WebSocketpp 0.8.2](https://github.com/zaphoyd/websocketpp)
+* [WebSocketpp (Latest commit)](https://github.com/zaphoyd/websocketpp)
 * Clang (on Linux)
 
 Visual Studio needs the `Desktop development with C++` workload with the `MSVC v142`, `Windows 10 SDK`, and `C++ Clang tools for Windows` components.

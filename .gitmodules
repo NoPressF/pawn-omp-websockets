@@ -10,9 +10,3 @@
 [submodule "pawn"]
 	path = pawn
 	url = https://github.com/openmultiplayer/compiler.git
-[submodule "websocketpp"]
-	path = websocketpp
-	url = https://github.com/zaphoyd/websocketpp.git
-[submodule "boost"]
-	path = boost
-	url = https://github.com/boostorg/boost.git
