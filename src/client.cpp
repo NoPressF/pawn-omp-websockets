@@ -155,14 +155,14 @@ bool WebSocketClient::isConnected() const
 	return m_connected;
 }
 
-bool WebSocketClient::send(const std::string& text)
+bool WebSocketClient::send(const std::string& message)
 {
 	if (!isConnected())
 		return false;
 
 	try
 	{
-		if (m_client.get_con_from_hdl(m_connectionPtr)->send(text, websocketpp::frame::opcode::text))
+		if (m_client.get_con_from_hdl(m_connectionPtr)->send(message, websocketpp::frame::opcode::text))
 			return false;
 
 		return true;

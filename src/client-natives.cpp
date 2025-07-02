@@ -70,11 +70,11 @@ SCRIPT_API(WSClientIsConnected, int(int id))
 	}
 }
 
-SCRIPT_API(WSClientSend, int(int id, const std::string& text))
+SCRIPT_API(WSClientSend, int(int id, const std::string& message))
 {
 	try
 	{
-		WebSocketClientManager::getInstance().getClient(id)->send(text);
+		WebSocketClientManager::getInstance().getClient(id)->send(message);
 		return 1;
 	}
 	catch (...)

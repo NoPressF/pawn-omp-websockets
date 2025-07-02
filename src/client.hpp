@@ -18,7 +18,7 @@ public:
 	bool disconnect();
 	bool isConnected() const;
 
-	bool send(const std::string& text);
+	bool send(const std::string& message);
 
 	int getID() const;
 	void setID(int index);
