@@ -12,7 +12,7 @@
 	url = https://github.com/openmultiplayer/compiler
 [submodule "websocketpp"]
 	path = websocketpp
-	url = https://github.com/zaphoyd/websocketpp/releases/tag/0.8.2
+	url = https://github.com/zaphoyd/websocketpp/
 [submodule "boost"]
 	path = boost
-	url = https://github.com/boostorg/boost/releases/tag/boost-1.86.0
+	url = https://github.com/boostorg/boost/
