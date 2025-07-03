@@ -137,7 +137,7 @@ bool WebSocketClient::disconnect()
 
 	try
 	{
-		m_client.stop();
+		m_client.close(m_connectionPtr, websocketpp::close::status::normal, "");
 		if (m_asioThread.joinable())
 			m_asioThread.join();
 
