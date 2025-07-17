@@ -88,7 +88,7 @@ WebSocketClient::WebSocketClient(
 					{
 						cell addr = 0;
 
-						script->PushString(&addr, NULL, data.c_str(), NULL, NULL);
+						script->PushString(&addr, NULL, data.c_str(), false, false);
 						script->Push(idx);
 						script->Exec(NULL, funcIDX);
 						script->Release(addr);
@@ -117,6 +117,7 @@ bool WebSocketClient::connect(const std::string& ip)
 	{
 		websocketpp::lib::error_code ec;
 		auto ptr = m_client.get_connection(ip, ec);
+		if (ec) return false;
 
 		m_connectionPtr = ptr->get_handle();
 		m_client.connect(ptr);
