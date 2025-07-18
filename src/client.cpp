@@ -54,20 +54,31 @@ WebSocketClient::WebSocketClient(
 			};
 		});
 
-	m_client.set_close_handler([&](WebsocketConnection)
+	m_client.set_close_handler([&](WebsocketConnection hdl)
 		{
 			m_connected = false;
 
+			websocketpp::lib::error_code ec;
+    		auto con = m_client.get_con_from_hdl(hdl, ec);
+
+			int code = con->get_remote_close_code();
+			std::string reason = con->get_remote_close_reason();
+
 			int idx = getID();
 			std::string func = m_functionDisconnectName;
-			TaskSync::getInstance() += [idx, func]()
+			TaskSync::getInstance() += [idx, func, code, reason]()
 			{
 				int funcIDX = 0;
 				IPawnScript* script = WebSocketsComponent::getInstance()->getScript();
 				if (!script->FindPublic(func.c_str(), &funcIDX))
 				{
+					cell addr = 0;
+					
+					script->PushString(&addr, NULL, reason.c_str(), false, false);
+					script->Push(code);
 					script->Push(idx);
 					script->Exec(NULL, funcIDX);
+					script->Release(addr);
 				}
 			};
 		});
