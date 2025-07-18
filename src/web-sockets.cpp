@@ -87,6 +87,11 @@ IPawnScript* WebSocketsComponent::getScript() const
 	return script_;
 }
 
+ICore* WebSocketsComponent::getCore() const
+{
+	return core_;
+}
+
 WebSocketsComponent::~WebSocketsComponent()
 {
 	if (pawn_)

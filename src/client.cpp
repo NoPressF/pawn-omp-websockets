@@ -117,7 +117,11 @@ bool WebSocketClient::connect(const std::string& ip)
 	{
 		websocketpp::lib::error_code ec;
 		auto ptr = m_client.get_connection(ip, ec);
-		if (ec) return false;
+		if (ec)
+		{
+			WebSocketsComponent::getInstance()->getCore()->logLn(LogLevel::Error, "[WebSockets] - Failed to connect to the \"%s\". Error: %s!", ip.c_str(), ec.message().c_str());
+			return false;
+		}
 
 		m_connectionPtr = ptr->get_handle();
 		m_client.connect(ptr);

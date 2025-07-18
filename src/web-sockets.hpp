@@ -29,6 +29,7 @@ public:
 	void onTick(Microseconds elapsed, TimePoint now) override;
 
 	IPawnScript* getScript() const;
+	ICore* getCore() const;
 	
 	static WebSocketsComponent* getInstance();
 	~WebSocketsComponent();
