@@ -25,8 +25,10 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32 -static-libgcc -static-libstdc++ -w -fPIC ")
 endif()
 
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
+if(UNIX)
+    set(THREADS_PREFER_PTHREAD_FLAG ON)
+    find_package(Threads REQUIRED)
+endif()
 
 # Boost for UNIX
 if(UNIX)
@@ -50,13 +52,13 @@ add_library(${PROJECT_NAME} SHARED ${SOURCES})
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         OMP-SDK
-        Threads::Threads
 )
 
 # Boost for UNIX
 if(UNIX)
     target_link_libraries(${PROJECT_NAME}
         PRIVATE
+            Threads::Threads
             ${Boost_LIBRARIES}
     )
 endif()
