@@ -2,49 +2,63 @@ cmake_minimum_required(VERSION 3.19)
 project(websockets LANGUAGES C CXX VERSION 1.0.0)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 add_subdirectory(sdk)
-add_subdirectory(network)
-
-link_directories(libs)
 
 include_directories(
-	.
-	pawn/source
-	pawn/source/linux
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/pawn/source
+    ${CMAKE_CURRENT_SOURCE_DIR}/pawn/source/linux
 )
 
 add_definitions(
-	-DHAVE_STDINT_H=1
-	-DPAWN_CELL_SIZE=32
+    -DHAVE_STDINT_H=1
+    -DPAWN_CELL_SIZE=32
 )
 
 if(WIN32)
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /w")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT /w ")
 else()
-	set(CMAKE_C_FLAGS "-m32 -static-libgcc -w")
-	set(CMAKE_CXX_FLAGS "-m32 -static-libgcc -static-libstdc++ -w ")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32 -static-libgcc -w -fPIC ")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32 -static-libgcc -static-libstdc++ -w -fPIC ")
 endif()
 
-# Boost
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
+# Boost for UNIX
 if(UNIX)
-	set(Boost_USE_STATIC_LIBS ON)
-	set(Boost_USE_MULTITHREADED ON)
-	set(Boost_ARCHITECTURE "-x32")
+    set(Boost_USE_STATIC_LIBS ON)
+    set(Boost_USE_MULTITHREADED ON)
+    set(Boost_ARCHITECTURE "-x32")
+    find_package(Boost REQUIRED COMPONENTS thread system)
 
-	find_package(Boost REQUIRED COMPONENTS REQUIRED)
-
-	if(Boost_FOUND)
-		include_directories(${Boost_INCLUDE_DIRS})
-	else(Error)
-		message(FATAL_ERROR "Boost can not be found!")
-	endif()
+    if(Boost_FOUND)
+        message(STATUS "Boost found: ${Boost_INCLUDE_DIRS}")
+        include_directories(${Boost_INCLUDE_DIRS})
+    else()
+        message(FATAL_ERROR "Boost not found!")
+    endif()
 endif()
 
 file(GLOB SOURCES "src/*.cpp")
+
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
-	OMP-SDK
-	${Boost_LIBRARIES}
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+        OMP-SDK
+        Threads::Threads
 )
+
+# Boost for UNIX
+if(UNIX)
+    target_link_libraries(${PROJECT_NAME}
+        PRIVATE
+            ${Boost_LIBRARIES}
+    )
+endif()
+
+set_property(TARGET ${PROJECT_NAME} PROPERTY PREFIX "")
