@@ -3,7 +3,7 @@
 * [CMake 3.19+](https://cmake.org/)
 * [Conan 1.53+](https://conan.io/)
 * [Visual Studio 2019+](https://www.visualstudio.com/) (on Windows)
-* [Boost 1.86.0](https://www.boost.org/releases/1.86.0/)
+* [Boost 1.86.0](https://www.boost.org/releases/1.86.0/) (preferably compiled with static linking and -fPIC)
 * Clang (on Linux)
 
 Visual Studio needs the `Desktop development with C++` workload with the `MSVC v142`, `Windows 10 SDK`, and `C++ Clang tools for Windows` components.
