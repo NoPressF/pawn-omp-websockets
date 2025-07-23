@@ -54,6 +54,17 @@ target_link_libraries(${PROJECT_NAME}
         OMP-SDK
 )
 
+if(WIN32)
+    find_library(BOOST_THREAD_LIB NAMES libboost_thread-clangw19-mt-x32-1_86 PATHS ${CMAKE_CURRENT_SOURCE_DIR}/libs)
+    find_library(BOOST_CHRONO_LIB NAMES libboost_chrono-clangw19-mt-x32-1_86 PATHS ${CMAKE_CURRENT_SOURCE_DIR}/libs)
+
+    target_link_libraries(${PROJECT_NAME}
+   	PRIVATE
+        ${BOOST_THREAD_LIB}
+        ${BOOST_CHRONO_LIB}
+    )
+endif()
+
 # Boost for UNIX
 if(UNIX)
     target_link_libraries(${PROJECT_NAME}
