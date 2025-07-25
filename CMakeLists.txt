@@ -32,14 +32,21 @@ endif()
 
 # Boost for UNIX
 if(UNIX)
+    set(BOOST_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/boost/stage32")
+    set(BOOST_INCLUDEDIR "${BOOST_ROOT}/include")
+    set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib")
+    
+    set(Boost_NO_SYSTEM_PATHS ON)
     set(Boost_USE_STATIC_LIBS ON)
     set(Boost_USE_MULTITHREADED ON)
     set(Boost_ARCHITECTURE "-x32")
+
     find_package(Boost REQUIRED COMPONENTS thread system)
 
     if(Boost_FOUND)
         message(STATUS "Boost found: ${Boost_INCLUDE_DIRS}")
         include_directories(${Boost_INCLUDE_DIRS})
+        link_directories(${Boost_LIBRARY_DIRS})
     else()
         message(FATAL_ERROR "Boost not found!")
     endif()
