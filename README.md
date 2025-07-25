@@ -23,7 +23,7 @@ git clone --recursive git@github.com:NoPressF/pawn-omp-websockets
 mkdir build
 cd build
 cmake .. -A Win32 -T ClangCL
-cmake --build . --config RelWithDebInfo
+cmake --build . --config Release
 ```
 
 Open Visual Studio and build the solution.
@@ -35,6 +35,6 @@ mkdir build
 cd build
 # May need to configure this line.
 export CC=/usr/lib/llvm/13/bin/clang CXX=/usr/lib/llvm/13/bin/clang++
-cmake .. -G Ninja -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -DCMAKE_BUILD_TYPE=Debug \
-cmake --build . --config Debug
+cmake .. -G Ninja -DCMAKE_C_FLAGS=-m32 -DCMAKE_CXX_FLAGS=-m32 -DCMAKE_BUILD_TYPE=Release \
+cmake --build . --config Release
 ```
